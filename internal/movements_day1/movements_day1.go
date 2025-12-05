@@ -50,6 +50,10 @@ func (ms *MovementState) PrettyJSON() string {
 	jsonBytes, _ := json.MarshalIndent(ms, "", "    ")
 	return string(jsonBytes)
 }
+func (ms MovementState) StructPrettyJSON() string {
+	jsonBytes, _ := json.MarshalIndent(ms, "", "    ")
+	return string(jsonBytes)
+}
 
 func (ms *MovementState) GetPos() int {
 	return ms.CurrentPos
@@ -59,24 +63,14 @@ func (ms *MovementState) GetZeroCount() int {
 }
 
 func (ms *MovementState) MoveRight(count int) {
-	numTilMax := ms.MaxPos - ms.CurrentPos
-	if numTilMax >= count {
-		ms.CurrentPos += count
-	} else {
-		ms.CurrentPos = 0 + (count - numTilMax - 1)
-	}
-	if ms.CurrentPos == 0 {
+	ms.CurrentPos += count
+	if ms.CurrentPos%100 == 0 {
 		ms.ZeroCounter++
 	}
 }
 func (ms *MovementState) MoveLeft(count int) {
-	numTilZero := ms.CurrentPos - 0
-	if numTilZero >= count {
-		ms.CurrentPos -= count
-	} else {
-		ms.CurrentPos = ms.MaxPos - (count - numTilZero - 1)
-	}
-	if ms.CurrentPos == 0 {
+	ms.CurrentPos -= count
+	if ms.CurrentPos%100 == 0 {
 		ms.ZeroCounter++
 	}
 }

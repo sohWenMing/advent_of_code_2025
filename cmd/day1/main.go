@@ -8,44 +8,29 @@ import (
 )
 
 func main() {
-	directionsAndCount, err := readFile.ReadFile("./input.txt", 5000)
+	directionsAndCount, err := readFile.ReadFile("./testinput.txt", 5000)
 	if err != nil {
 		panic(err)
 	}
 
 	movementState := movementsday1.InitMovementState(50, 99)
-	fmt.Println("start movement state")
-	fmt.Println("movement state: ", movementState.PrettyJSON())
-	fmt.Println("")
-	fmt.Println("")
 
-	for _, record := range directionsAndCount {
+	for i, record := range directionsAndCount {
+		if i == len(directionsAndCount)-1 {
+			fmt.Println("movement state before: ", movementState.PrettyJSON())
+		}
 
-		movementStateBeforeMoveJSON := movementState.PrettyJSON()
-		zeroCountBeforeMove := movementState.GetZeroCount()
+		// zeroCountBeforeMove := movementState.GetZeroCount()
 		err := movementState.Move(record)
 		if err != nil {
 			panic(err)
 		}
-		zeroCounterAftermove := movementState.GetZeroCount()
-		movementStateAfterMoveJSON := movementState.PrettyJSON()
-		if zeroCounterAftermove > zeroCountBeforeMove {
-			fmt.Println("movement state before move")
-			fmt.Println(movementStateBeforeMoveJSON)
-			fmt.Println("=========================")
-			fmt.Println("")
-			fmt.Println("")
-			fmt.Println("record")
-			fmt.Println(record.PrettyJSON())
-			fmt.Println("=========================")
-			fmt.Println("")
-			fmt.Println("")
-			fmt.Println("movement state after move")
-			fmt.Println(movementStateAfterMoveJSON)
-			fmt.Println("=========================")
-			fmt.Println("")
-			fmt.Println("")
+		if i == len(directionsAndCount)-1 {
+			fmt.Println("record: ", record.PrettyJSON())
+			fmt.Println("movement state after: ", movementState.PrettyJSON())
 		}
+
+		// zeroCounterAftermove := movementState.GetZeroCount()
 
 	}
 	fmt.Println("Zero Count: ", movementState.GetZeroCount())

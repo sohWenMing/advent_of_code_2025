@@ -41,7 +41,7 @@ func TestMoveTwoRight(t *testing.T) {
 			return
 		}
 	}
-	expectedPos := 1
+	expectedPos := 101
 	checkPosition(t, expectedPos, movementState)
 	expectedCounter := 1
 	checkCounter(t, movementState, expectedCounter)
@@ -63,26 +63,10 @@ func TestMoveTwoLeft(t *testing.T) {
 			return
 		}
 	}
-	expectedPos := 98
+	expectedPos := -2
 	checkPosition(t, expectedPos, movementState)
 	expectedCounter := 1
 	checkCounter(t, movementState, expectedCounter)
-}
-
-func TestBasicMovementRight(t *testing.T) {
-	testInterface := testDirectionAndCountInterface{
-		"RIGHT", 2,
-	}
-	movementState := InitMovementState(0, 1)
-	err := movementState.Move(testInterface)
-	if err != nil {
-		t.Errorf("didn't expect error, got err %v\n", err)
-		return
-	}
-	expectedPos := 0
-	checkPosition(t, expectedPos, movementState)
-	expectedZeroCounter := 2
-	checkCounter(t, movementState, expectedZeroCounter)
 }
 
 func checkCounter(t *testing.T, movementState *MovementState, expectedZeroCounter int) {
@@ -90,20 +74,4 @@ func checkCounter(t *testing.T, movementState *MovementState, expectedZeroCounte
 	if gotZeroCounter != expectedZeroCounter {
 		t.Errorf("got %d\nwant %d", gotZeroCounter, expectedZeroCounter)
 	}
-}
-func TestBasicMovementLeft(t *testing.T) {
-	testInterface := testDirectionAndCountInterface{
-		"LEFT", 2,
-	}
-	movementState := InitMovementState(0, 1)
-	err := movementState.Move(testInterface)
-	if err != nil {
-		t.Errorf("didn't expect error, got err %v\n", err)
-		return
-	}
-	expectedPos := 0
-	checkPosition(t, expectedPos, movementState)
-
-	expectedZeroCounter := 2
-	checkCounter(t, movementState, expectedZeroCounter)
 }

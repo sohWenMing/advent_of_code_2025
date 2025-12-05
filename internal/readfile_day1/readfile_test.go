@@ -49,7 +49,7 @@ func TestProcessLine(t *testing.T) {
 			"test number has characters should fail",
 			"RRRRRR",
 			DirectionAndCount{RIGHT, 1},
-			false,
+			true,
 		},
 	}
 	for _, test := range tests {
