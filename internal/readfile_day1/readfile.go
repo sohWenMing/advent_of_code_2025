@@ -4,7 +4,7 @@ import (
 	"bufio"
 	"encoding/json"
 	"errors"
-	"fmt"
+	"io"
 	"os"
 	"strconv"
 	"strings"
@@ -13,8 +13,8 @@ import (
 type Direction int
 
 const (
-	Right = iota
-	Left
+	RIGHT = iota
+	LEFT
 )
 
 type DirectionAndCount struct {
@@ -27,21 +27,31 @@ func (d DirectionAndCount) PrettyJSON() string {
 	return string(jsonBytes)
 }
 
-func ReadFile(filePath string) ([]DirectionAndCount, error) {
+func ReadFile(filePath string, numLines int) ([]DirectionAndCount, error) {
 	file, err := os.Open(filePath)
 	if err != nil {
 		return nil, err
 	}
-	returnedDirectionsAndCount := []DirectionAndCount{}
 	defer file.Close()
-	scanner := bufio.NewScanner(file)
+	returnedDirectionsAndCount, err := ReadLinesFromFile(file, numLines)
+	return returnedDirectionsAndCount, nil
+}
+
+func ReadLinesFromFile(r io.Reader, numLines int) ([]DirectionAndCount, error) {
+	returnedDirectionsAndCount := []DirectionAndCount{}
+	linesRead := 0
+	scanner := bufio.NewScanner(r)
 	for scanner.Scan() {
+		if linesRead >= numLines {
+			break
+		}
 		line := scanner.Text()
 		directionAndCount, err := processLine(line)
 		if err != nil {
 			return nil, err
 		}
 		returnedDirectionsAndCount = append(returnedDirectionsAndCount, directionAndCount)
+		linesRead++
 	}
 	return returnedDirectionsAndCount, nil
 }
@@ -64,18 +74,16 @@ func processLine(line string) (DirectionAndCount, error) {
 func getDirectionAndCountFromLine(line, prefix string) (DirectionAndCount, error) {
 	returnedDirectionAndCount := DirectionAndCount{}
 	countString := strings.TrimPrefix(line, prefix)
-	fmt.Println("countString", countString)
 	count, err := strconv.Atoi(countString)
-	fmt.Println("count: ", count)
 
 	if err != nil {
 		return returnedDirectionAndCount, err
 	}
 	switch prefix {
 	case "R":
-		returnedDirectionAndCount.Direction = Right
+		returnedDirectionAndCount.Direction = RIGHT
 	default:
-		returnedDirectionAndCount.Direction = Left
+		returnedDirectionAndCount.Direction = LEFT
 	}
 	returnedDirectionAndCount.Count = count
 	return returnedDirectionAndCount, nil
