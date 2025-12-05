@@ -22,6 +22,18 @@ type DirectionAndCount struct {
 	Count     int
 }
 
+func (d DirectionAndCount) GetDirection() string {
+	switch d.Direction {
+	case RIGHT:
+		return "RIGHT"
+	default:
+		return "LEFT"
+	}
+}
+func (d DirectionAndCount) GetCount() int {
+	return d.Count
+}
+
 func (d DirectionAndCount) PrettyJSON() string {
 	jsonBytes, _ := json.MarshalIndent(d, "", "    ")
 	return string(jsonBytes)
