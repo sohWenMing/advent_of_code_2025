@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	directionsAndCount, err := readFile.ReadFile("./testinput.txt", 5000)
+	directionsAndCount, err := readFile.ReadFile("./input.txt", 5000)
 	if err != nil {
 		panic(err)
 	}
