@@ -16,3 +16,9 @@
 - parseInt the number, so we can get the number of iterations
 - after each set of rotations is done, check if the current position % 100 == 0, which would signify that it was
 - a number that signified 0
+
+## Part 2
+
+- The main idea is to keep adding to the checked substring which is the first half of the string
+- keep using trimPrefix, and then check index to see if it's found at index 0, if it is, then keep going
+- if the string being checked in the moment is finally empty, then it is invalid

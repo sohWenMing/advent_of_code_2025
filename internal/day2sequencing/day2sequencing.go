@@ -8,6 +8,38 @@ import (
 	"strings"
 )
 
+func CheckIsAllRepeatedSubString(input string) bool {
+	if len(input) <= 1 {
+		return false
+	}
+	middle := len(input) / 2
+	curIdx := 0
+	var b strings.Builder
+	for len(b.String()) < middle {
+		b.WriteByte(input[curIdx])
+		subString := b.String()
+		curString := input[curIdx+1:]
+		if recurseCheckSubstr(subString, curString) == true {
+			return true
+		}
+		curIdx++
+	}
+	return false
+}
+
+func recurseCheckSubstr(subString, curString string) bool {
+	curString = strings.TrimPrefix(curString, subString)
+	if len(curString) == 0 {
+		return true
+	}
+	switch strings.HasPrefix(curString, subString) {
+	case false:
+		return false
+	default:
+		return recurseCheckSubstr(subString, curString)
+	}
+}
+
 func IsRepeated(input string) bool {
 	if len(input)%2 != 0 {
 		return false

@@ -11,6 +11,32 @@ type test struct {
 	isExpectRepeat bool
 }
 
+func TestCheckIsAllRepeatedSubString(t *testing.T) {
+	tests := []test{
+		{
+			"basic test should be repeated",
+			"123123123",
+			true,
+		},
+		{
+			"basic test should not be repeated",
+			"123456",
+			false,
+		},
+		{
+			"some repeats but not all",
+			"1212123",
+			false,
+		},
+	}
+	for _, test := range tests {
+		got := CheckIsAllRepeatedSubString(test.input)
+		if got != test.isExpectRepeat {
+			t.Errorf("got %v\nwant %v\n", got, test.isExpectRepeat)
+		}
+	}
+}
+
 func TestIsRepeated(t *testing.T) {
 	tests := []test{
 		{

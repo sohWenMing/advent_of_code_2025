@@ -27,6 +27,9 @@ func main() {
 	invalids := []int64{}
 	sum := int64(0)
 
+	invalids_2 := []int64{}
+	sum_2 := int64(0)
+
 	for _, numRange := range numRanges {
 		numRangeFromString, err := day2sequencing.GetNumRangeFromString(numRange)
 		if err != nil {
@@ -37,10 +40,18 @@ func main() {
 			if day2sequencing.IsRepeated(numString) {
 				invalids = append(invalids, int64(num))
 			}
+			if day2sequencing.CheckIsAllRepeatedSubString(numString) {
+				invalids_2 = append(invalids_2, int64(num))
+			}
 		}
 	}
 	for _, invalid := range invalids {
 		sum += invalid
 	}
-	fmt.Println("sum: ", sum)
+	for _, invalid := range invalids_2 {
+		sum_2 += invalid
+	}
+
+	fmt.Println("sum for day2 part 1: ", sum)
+	fmt.Println("sum for day2 part 2: ", sum_2)
 }
