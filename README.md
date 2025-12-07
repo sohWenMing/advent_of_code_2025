@@ -7,3 +7,5 @@ This year I decided to use it to practice Go, while also taking the chance to us
 If you happen to come across this, and want to connect, let me know!
 
 The runnable solutions can be found within the /cmd folder - where each day's solution is in its own folder
+
+If you're interested in doing this yourself, you can checkit out at https://adventofcode.com/2025
