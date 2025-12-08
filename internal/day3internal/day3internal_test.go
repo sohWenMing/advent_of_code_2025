@@ -5,6 +5,63 @@ import (
 	"testing"
 )
 
+func TestGetLargestPossibleNumWithRemaining(t *testing.T) {
+	type test struct {
+		name          string
+		input         string
+		minChars      int
+		expected      string
+		isErrExpected bool
+	}
+	tests := []test{
+		{
+			"basic test should pass",
+			"987654321111111",
+			12,
+			"987654321111",
+			false,
+		},
+		{
+			"basic test 2 should pass",
+			"811111111111119",
+			12,
+			"811111111119",
+			false,
+		},
+		{
+			"basic test 2 should pass",
+			"234234234234278",
+			12,
+			"434234234278",
+			false,
+		},
+		{
+			"basic test 2 should pass",
+			"818181911112111",
+			12,
+			"888911112111",
+			false,
+		},
+	}
+	for _, test := range tests {
+		got, err := GetLargestPossibleNumWithRemainingChars(test.input, test.minChars)
+		switch test.isErrExpected {
+		case true:
+			if err == nil {
+				t.Errorf("expected error, didn't get one")
+				return
+			}
+		default:
+			if err != nil {
+				t.Errorf("didn't expect error, got %v\n", err)
+			}
+			if got != test.expected {
+				t.Errorf("got %s\nwant %s\n", got, test.expected)
+			}
+		}
+	}
+}
+
 func TestGetLargestPossible(t *testing.T) {
 	type test struct {
 		name          string

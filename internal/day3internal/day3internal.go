@@ -5,7 +5,55 @@ import (
 	"errors"
 	"fmt"
 	"strconv"
+	"strings"
 )
+
+func GetLargestPossibleNumWithRemainingChars(input string, minChars int) (char string, err error) {
+	if len(input) < minChars {
+		return "", errors.New("length of input less than minChars")
+	}
+	// here if we are already at the number of chars we need, just return
+	if len(input) == minChars {
+		return input, nil
+	}
+	// if we only need one last character, get the largest
+	if minChars == 1 {
+		numInt, err := GetLargestFromString(input)
+		if err != nil {
+			return "", err
+		}
+		return fmt.Sprintf("%d", numInt), nil
+	}
+	if minChars == 0 {
+		return "", nil
+	}
+	largest := 0
+	stopIdx := 0
+	for i, char := range input {
+		num, err := strconv.ParseInt(string(char), 0, 10)
+		if err != nil {
+			return "", err
+		}
+		numInt := int(num)
+		if numInt > largest {
+			largest = numInt
+			stopIdx = i
+		}
+		if len(input[i:]) <= minChars {
+			break
+		}
+	}
+	var b strings.Builder
+	b.WriteString(string(input[stopIdx]))
+	returnedChar, err := GetLargestPossibleNumWithRemainingChars(
+		input[stopIdx+1:], minChars-1,
+	)
+	if err != nil {
+		return "", err
+	}
+	b.WriteString(returnedChar)
+	return b.String(), nil
+}
 
 func GetLargestPossibleNumFromString(input string) (returned int, err error) {
 	if len(input) <= 2 {
