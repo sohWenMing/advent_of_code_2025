@@ -8,14 +8,14 @@ import (
 )
 
 func GetLargestPossibleNumFromString(input string) (returned int, err error) {
-	if len(input) <= 1 {
+	if len(input) <= 2 {
 		return returned, errors.New("input length was 0")
 	}
 	numToPos, err := GetFirstLargestFromInput(input)
 	if err != nil {
 		return 0, err
 	}
-	leftString := input[numToPos.Pos:]
+	leftString := input[numToPos.Pos+1:]
 	secondNum, err := GetLargestFromString(leftString)
 	if err != nil {
 		return 0, err
