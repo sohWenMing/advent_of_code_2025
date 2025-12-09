@@ -9,8 +9,25 @@ import (
 )
 
 type StartEnd struct {
-	start int64
-	end   int64
+	Start int64
+	End   int64
+}
+
+func GetNumAvailable(filepath string) (numAvailable int, err error) {
+	nums, startEnds, err := GetNumsAndStartEndsFromFile(filepath)
+	if err != nil {
+		return 0, err
+	}
+	numAvailable = 0
+	for _, num := range nums {
+		for _, startEnd := range startEnds {
+			if num >= startEnd.Start && num <= startEnd.End {
+				numAvailable++
+				break
+			}
+		}
+	}
+	return numAvailable, nil
 }
 
 func GetNumsAndStartEndsFromFile(filepath string) (
@@ -113,7 +130,7 @@ func ParseStringToStartEnd(input string) (startEnd StartEnd, err error) {
 	if end < start {
 		return startEnd, fmt.Errorf("invalid input: %s", input)
 	}
-	startEnd.start = start
-	startEnd.end = end
+	startEnd.Start = start
+	startEnd.End = end
 	return startEnd, nil
 }

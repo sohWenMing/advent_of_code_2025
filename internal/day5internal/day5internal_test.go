@@ -5,6 +5,19 @@ import (
 	"testing"
 )
 
+func TestIntegration(t *testing.T) {
+	numAvailable, err := GetNumAvailable("./testinput.txt")
+	if err != nil {
+		t.Errorf("didn't expect error, got %v\n", err)
+		return
+	}
+	want := 3
+	if numAvailable != want {
+		t.Errorf("got %d\nwant %d\n", numAvailable, want)
+		return
+	}
+}
+
 func TestGetNumsAndStartEndsFromFile(t *testing.T) {
 	nums, startEnds, err := GetNumsAndStartEndsFromFile("./testinput.txt")
 	if err != nil {
