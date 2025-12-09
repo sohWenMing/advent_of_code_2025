@@ -36,3 +36,10 @@ this will give us the starting state of:
 
 - the initial map - which will note which cells have crates
 - the layout of the cells
+
+for each **cell**:
+
+- check if it's filled
+- if it's filled, then check whether the surrounding cells have less than 4 crates
+- if so, we can create it so add one to numMoved
+- use the x and y coords of the cell, to build the key, and then remove it from the map
