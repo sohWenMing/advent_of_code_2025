@@ -5,6 +5,18 @@ import (
 	"testing"
 )
 
+func TestGetPart2Ingredients(t *testing.T) {
+	numIngedients, err := GetPart2Ingredients("./testinput.txt")
+	if err != nil {
+		t.Errorf("didn't expect error, got %v\n", err)
+		return
+	}
+	want := 14
+	if numIngedients != want {
+		t.Errorf("got %d\nwant %d\n", numIngedients, want)
+	}
+}
+
 func TestIntegration(t *testing.T) {
 	numAvailable, err := GetNumAvailable("./testinput.txt")
 	if err != nil {

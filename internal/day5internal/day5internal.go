@@ -12,6 +12,28 @@ type StartEnd struct {
 	Start int64
 	End   int64
 }
+type NumMap map[int64]struct{}
+
+func GetPart2Ingredients(filepath string) (numIngredients int, err error) {
+	numMap := make(NumMap)
+	_, startEnds, err := GetNumsAndStartEndsFromFile(filepath)
+	if err != nil {
+		return 0, err
+	}
+	for _, startEnd := range startEnds {
+		fmt.Println("start end being eval: ", startEnd)
+		for startEnd.Start <= startEnd.End {
+			fmt.Println("val start: ", startEnd.Start)
+			numMap[startEnd.Start] = struct{}{}
+			startEnd.Start++
+		}
+	}
+	numIngredients = 0
+	for range numMap {
+		numIngredients++
+	}
+	return numIngredients, nil
+}
 
 func GetNumAvailable(filepath string) (numAvailable int, err error) {
 	nums, startEnds, err := GetNumsAndStartEndsFromFile(filepath)
